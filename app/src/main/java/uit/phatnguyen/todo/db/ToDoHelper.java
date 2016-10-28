@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import uit.phatnguyen.todo.model.Todo;
 import uit.phatnguyen.todo.model.TodoList;
 
 /**
@@ -45,8 +46,21 @@ public class ToDoHelper {
 
         return database.insert(TodoList.TABLE_NAME,null,contentValues);
     }
-    public void asa(String sql,String[] params){
-        database.execSQL(sql,params);
+    public long insertToDoItem(Todo todo){
+        ContentValues contentValues = new ContentValues();
+        //Put các trường vào
+        contentValues.put(Todo.COL_ID,todo.getID());
+        contentValues.put(Todo.COL_TODOFK,todo.getTODO_FK());
+        contentValues.put(Todo.COL_CONTENT,todo.getCONTENT());
+        contentValues.put(Todo.COL_DATE,todo.getDATE());
+        contentValues.put(Todo.COL_HOUR,todo.getHOUR());
+        contentValues.put(Todo.COL_LOCATION,todo.getLOCATION());
+        contentValues.put(Todo.COL_STATUS,todo.getSTATUS());
+        contentValues.put(Todo.COL_COLOR,todo.getCOLOR());
+        contentValues.put(Todo.COL_NGAYTAO,todo.getNGAYTAO());
+        contentValues.put(Todo.COL_NGAYSUA,todo.getNGAYSUA());
+
+        return database.insert(Todo.TABLE_NAME,null,contentValues);
     }
     public int getNext(String table_name, String col_integer){
         String query = "SELECT " + col_integer + " FROM " + table_name + " ORDER BY "+ col_integer

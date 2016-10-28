@@ -5,13 +5,13 @@ package uit.phatnguyen.todo.model;
  */
 
 public class Todo {
-    private String ID;
+    private int ID;
     private String TODO_FK;
     private String CONTENT;
     private String DATE;
     private String HOUR;
     private String LOCATION;
-    private Boolean STATUS; //TRUE LA HOAN THANH
+    private int STATUS; //1 LA HOAN THANH
     private String COLOR;
     private String NGAYTAO;
     private String NGAYSUA;
@@ -21,7 +21,7 @@ public class Todo {
     public final static String COL_TODOFK = "TODO_FK";
     public final static String COL_CONTENT = "CONTENT";
     public final static String COL_DATE = "DATE";
-    public final static String COL_HOUR = "HOUR";
+    public final static String COL_HOUR = "TIME";
     public final static String COL_LOCATION = "LOCATION";
     public final static String COL_STATUS = "STATUS";
     public final static String COL_COLOR = "COLOR";
@@ -30,8 +30,11 @@ public class Todo {
 
     public final static String TABLE_NAME = "TODOITEMS";
 
-    public Todo(String ID, String TODO_FK, String CONTENT, String DATE, String HOUR,
-                String LOCATION, Boolean STATUS, String COLOR, String NGAYTAO, String NGAYSUA) {
+    public Todo() {
+    }
+
+    public Todo(int ID, String TODO_FK, String CONTENT, String DATE, String HOUR,
+                String LOCATION, int STATUS, String COLOR, String NGAYTAO, String NGAYSUA) {
         this.ID = ID;
         this.TODO_FK = TODO_FK;
         this.CONTENT = CONTENT;
@@ -44,11 +47,11 @@ public class Todo {
         this.NGAYSUA = NGAYSUA;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -92,11 +95,11 @@ public class Todo {
         this.LOCATION = LOCATION;
     }
 
-    public Boolean getSTATUS() {
+    public int getSTATUS() {
         return STATUS;
     }
 
-    public void setSTATUS(Boolean STATUS) {
+    public void setSTATUS(int STATUS) {
         this.STATUS = STATUS;
     }
 
@@ -122,5 +125,13 @@ public class Todo {
 
     public void setNGAYSUA(String NGAYSUA) {
         this.NGAYSUA = NGAYSUA;
+    }
+
+    @Override
+    public String toString() {
+        String todo = "";
+        todo += "TASK : " + this.getID() ;
+        todo += "--" + "CONTENT : " + this.getCONTENT();
+        return todo;
     }
 }

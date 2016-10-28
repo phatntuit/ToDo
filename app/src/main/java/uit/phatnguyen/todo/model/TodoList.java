@@ -69,4 +69,13 @@ public class TodoList {
     public void setNGAYSUA(String NGAYSUA) {
         this.NGAYSUA = NGAYSUA;
     }
+
+    @Override
+    public String toString() {
+        String out = "";
+        out += "ID : " + this.getID();
+        out += "--";
+        out += "TITLE : " + this.getTITLE();
+        return out;
+    }
 }

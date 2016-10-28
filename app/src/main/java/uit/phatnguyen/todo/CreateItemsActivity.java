@@ -2,12 +2,14 @@ package uit.phatnguyen.todo;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class CreateItemsActivity extends AppCompatActivity {
     Button btnNgay, btnGio;
@@ -15,6 +17,14 @@ public class CreateItemsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.items_detail);
+
+        //lấy intent gọi Activity này
+        Intent callerIntent = getIntent();
+        Bundle list = new Bundle();
+        list = callerIntent.getBundleExtra("list");
+        String tenList = list.getString("tenList");
+        Toast.makeText(this,tenList,Toast.LENGTH_LONG).show();
+
         getControls();
         setDefault();
         addEvents();
