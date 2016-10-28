@@ -26,10 +26,18 @@
         android:layout_height="wrap_content"
         android:background="#7c6eeadc"
         android:text="ADD NEW" />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvNotification"
+        android:visibility="gone"
+        android:hint="show notifiaction when it has no todo list"
+        />
     <ListView
         android:id="@+id/lvToDoList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content">
+
+    </ListView>
 
 </LinearLayout>
