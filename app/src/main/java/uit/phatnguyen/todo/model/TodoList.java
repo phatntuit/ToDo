@@ -5,4 +5,68 @@ package uit.phatnguyen.todo.model;
  */
 
 public class TodoList {
+    private int ID;
+    private String TITLE;
+    private String COLOR = "YELLOW";
+    private String NGAYTAO;
+    private String NGAYSUA;
+
+    //Khai bao truong cua cac cot trong CSDL;
+    public final static String COL_ID = "ID";
+    public final static String COL_TITLE = "TITLE";
+    public final static String COL_COLOR = "COLOR";
+    public final static String COL_NGAYTAO = "NGAYTAO";
+    public final static String COL_NGAYSUA = "NGAYSUA";
+    public final static String TABLE_NAME = "TODOLIST";
+
+    public TodoList() {
+    }
+
+    public TodoList(int ID, String TITLE, String COLOR, String NGAYTAO, String NGAYSUA) {
+        this.ID = ID;
+        this.TITLE = TITLE;
+        this.COLOR = COLOR;
+        this.NGAYTAO = NGAYTAO;
+        this.NGAYSUA = NGAYSUA;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getTITLE() {
+        return TITLE;
+    }
+
+    public void setTITLE(String TITLE) {
+        this.TITLE = TITLE;
+    }
+
+    public String getCOLOR() {
+        return COLOR;
+    }
+
+    public void setCOLOR(String COLOR) {
+        this.COLOR = COLOR;
+    }
+
+    public String getNGAYTAO() {
+        return NGAYTAO;
+    }
+
+    public void setNGAYTAO(String NGAYTAO) {
+        this.NGAYTAO = NGAYTAO;
+    }
+
+    public String getNGAYSUA() {
+        return NGAYSUA;
+    }
+
+    public void setNGAYSUA(String NGAYSUA) {
+        this.NGAYSUA = NGAYSUA;
+    }
 }

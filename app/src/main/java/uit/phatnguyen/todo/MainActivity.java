@@ -8,18 +8,24 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import uit.phatnguyen.todo.db.ToDoHelper;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnAddList;
     ListView lvToDoList;
     TextView tvNow;
+    ToDoHelper toDoHelper ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getControls();
+        //Khoi tao database cho app
+        toDoHelper = new ToDoHelper(MainActivity.this);
+        /*getControls();
         setDefault();
-        addEvents();
+        addEvents();*/
+
     }
     private void getControls(){
         btnAddList = (Button) findViewById(R.id.btnAddList);
