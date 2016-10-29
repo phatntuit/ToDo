@@ -31,12 +31,19 @@ public class MainActivity extends AppCompatActivity {
     String date;
     //dung de gui gia tri qua cac activity
     Bundle mainBundle ;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Khoi tao database cho app
         toDoHelper = new ToDoHelper(MainActivity.this);
+
         //get control setdefaul and add event
         getControls();
         setDefault();
@@ -66,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TodoList tdl = new TodoList();
                 tdl = arrayListTodoList.get(position);
-                int idlist = tdl.getID();
-                String title = tdl.getTITLE();
+                int listId = tdl.getID();
+                String listTitle = tdl.getTITLE();
                 //Toast.makeText(MainActivity.this,"Da vao item select",Toast.LENGTH_LONG).show();
                 Log.d("item click","Da vao roi");
-                requestDisplayList(idlist,title);
+                requestDisplayList(listId,listTitle);
             }
         });
         lvToDoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -104,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
                 tdl.setTITLE(TITLE);
                 //them tdl vao mang arraylist
                 arrayListTodoList.add(tdl);
+                //cap nhat adapter
+                arrayAdapterTodoList.notifyDataSetChanged();
             }
             //System.out.println("So phan tu arraylist todolist :" + arrayListTodoList.size());
         }
@@ -115,17 +124,19 @@ public class MainActivity extends AppCompatActivity {
     private void addList() {
         Intent intent = new Intent(MainActivity.this,CreateListActivity.class);
 
-        int id = toDoHelper.getNext(TodoList.TABLE_NAME,TodoList.COL_ID);
-        mainBundle.putInt("id",id);
-        intent.putExtra("main",mainBundle);
+        int listId = toDoHelper.getNext(TodoList.TABLE_NAME,TodoList.COL_ID);
+        mainBundle.putInt("listId",listId);
+        mainBundle.putString("action","new");
+        intent.putExtra("toList",mainBundle);
 
         startActivity(intent);
     }
-    private void requestDisplayList(int id, String title) {
+    private void requestDisplayList(int listId,String listTitle) {
         Intent intent = new Intent(MainActivity.this,CreateListActivity.class);
-        mainBundle.putInt("idList",id);
-        mainBundle.putString("title",title);
-        intent.putExtra("main",mainBundle);
+        mainBundle.putInt("listId",listId);
+        mainBundle.putString("listTitle",listTitle);
+        mainBundle.putString("action","update");
+        intent.putExtra("toList",mainBundle);
         startActivity(intent);
     }
     public class processMyFunct implements View.OnClickListener{

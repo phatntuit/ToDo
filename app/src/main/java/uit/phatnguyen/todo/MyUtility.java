@@ -28,10 +28,20 @@ public final class MyUtility {
         //Lấy đối tượng Calendar ra, mặc định ngày hiện tại
         Calendar now = Calendar.getInstance();
         //Lấy ngày theo kiểu ngày/tháng/năm
-        String strDateFormat = "dd/MM/yyyy";
+        String strDateFormat = "dd-MM-yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
         date = sdf.format(now.getTime());
         return date;
+    }
+    public static String getCurrentDateTime(){
+        String datetime;
+        //Lấy đối tượng Calendar ra, mặc định ngày hiện tại
+        Calendar now = Calendar.getInstance();
+        //Lấy ngày theo kiểu ngày/tháng/năm
+        String strDateFormat = "dd-MM-yyyy HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+        datetime = sdf.format(now.getTime());
+        return datetime;
     }
     //Tham khảo từ duythanhcse
     public static void SudungCalendar()

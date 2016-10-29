@@ -20,6 +20,7 @@ public class TodoList {
     public final static String COL_NGAYTAO = "NGAYTAO";
     public final static String COL_NGAYSUA = "NGAYSUA";
     public final static String TABLE_NAME = "TODOLIST";
+    public final static String WHERE_ID = "ID =?";
 
     public TodoList() {
        this.COLOR = "YELLOW";

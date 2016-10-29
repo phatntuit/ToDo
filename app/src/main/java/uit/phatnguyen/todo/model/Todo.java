@@ -32,8 +32,10 @@ public class Todo implements Serializable{
     public final static String COL_NHACNHO = "isNOTIFICATION";
 
     public final static String TABLE_NAME = "TODOITEMS";
+    public final static String WHERE_ID= " ID = ?";
 
     public Todo() {
+        this.COLOR = "GREEN";
     }
     public int getID() {
         return ID;
@@ -103,9 +105,8 @@ public class Todo implements Serializable{
     }
     @Override
     public String toString() {
-        String todo = "";
-        todo += "TASK : " + this.getID() ;
-        todo += "--" + "CONTENT : " + this.getCONTENT();
-        return todo;
+        return "Todo [ID=" + ID + ", TODO_FK=" + TODO_FK + ", CONTENT=" + CONTENT + ", DATE=" + DATE + ", HOUR=" + HOUR
+                + ", LOCATION=" + LOCATION + ", STATUS=" + STATUS + ", isNOTIFICATION=" + isNOTIFICATION + ", COLOR="
+                + COLOR + ", NGAYTAO=" + NGAYTAO + ", NGAYSUA=" + NGAYSUA + "]";
     }
 }
