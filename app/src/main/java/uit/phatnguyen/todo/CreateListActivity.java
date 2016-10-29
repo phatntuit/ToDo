@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +17,9 @@ import java.util.ArrayList;
 
 import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.model.Todo;
-
 /**
  * Created by PhatNguyen on 2016-10-25.
  */
-
 public class CreateListActivity extends AppCompatActivity {
     Button btnAddItems,btnSaveList,btnBack;
     EditText edtTenList;
@@ -49,7 +48,7 @@ public class CreateListActivity extends AppCompatActivity {
             Log.d("id",id+"");
             String title = main.getString("title")+"";
             edtTenList.setText(title);
-            displayList(id);
+            showList(id);
         }
     }
     private void getControls(){
@@ -64,6 +63,22 @@ public class CreateListActivity extends AppCompatActivity {
         btnAddItems.setOnClickListener(new processMyFunct());
         btnSaveList.setOnClickListener(new processMyFunct());
         btnBack.setOnClickListener(new processMyFunct());
+        lvToDoItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Todo todo = new Todo();
+                todo = arrayListTodo.get(position);
+                requestDisplayItem(todo);
+            }
+        });
+    }
+    private void requestDisplayItem(Todo item) {
+        Intent intent = new Intent(CreateListActivity.this,CreateItemsActivity.class);
+        //gui object qua
+        listBundle.putSerializable("item",item);
+        listBundle.putString("action","view");
+        intent.putExtra("list",listBundle);
+        startActivity(intent);
     }
     private void backMain() {
         Intent intent = new Intent(CreateListActivity.this,MainActivity.class);
@@ -119,16 +134,16 @@ public class CreateListActivity extends AppCompatActivity {
             edtTenList.setText(tenlist);
         }
     }
-    private void displayList(int id){
-        getList(id);
+    private void showList(int idList){
+        getList(idList);
         arrayAdapterTodo = new ArrayAdapter<Todo>(this,
                 android.R.layout.simple_list_item_1,arrayListTodo);
         lvToDoItems.setAdapter(arrayAdapterTodo);
     }
-    private void getList(int id){
+    private void getList(int idList){
         ToDoHelper toDoHelper = new ToDoHelper(this);
         Cursor cursor ;
-        cursor = toDoHelper.getQuery("SELECT * FROM TODOITEMS WHERE TODO_FK = " + id,null);
+        cursor = toDoHelper.getQuery("SELECT * FROM TODOITEMS WHERE TODO_FK = " + idList,null);
         if(cursor.getCount() > 0){
             for (int i =0 ; i< cursor.getCount() ; i++){
                 //chuyen con tro ve vi tri thu i
@@ -141,6 +156,7 @@ public class CreateListActivity extends AppCompatActivity {
                 String HOUR = cursor.getString(cursor.getColumnIndex(Todo.COL_HOUR));
                 String LOCATION = cursor.getString(cursor.getColumnIndex(Todo.COL_LOCATION));
                 int STATUS = cursor.getInt(cursor.getColumnIndex(Todo.COL_STATUS));
+                int isNOTIFICATION = cursor.getInt(cursor.getColumnIndex(Todo.COL_NHACNHO));
                 String COLOR = cursor.getString(cursor.getColumnIndex(Todo.COL_COLOR));
                 String NGAYTAO = cursor.getString(cursor.getColumnIndex(Todo.COL_NGAYTAO));
                 String NGAYSUA = cursor.getString(cursor.getColumnIndex(Todo.COL_NGAYSUA));
@@ -153,6 +169,7 @@ public class CreateListActivity extends AppCompatActivity {
                 td.setHOUR(HOUR);
                 td.setLOCATION(LOCATION);
                 td.setSTATUS(STATUS);
+                td.setIsNOTIFICATION(isNOTIFICATION);
                 td.setCOLOR(COLOR);
                 td.setNGAYTAO(NGAYTAO);
                 td.setNGAYSUA(NGAYSUA);

@@ -7,12 +7,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
+
+import uit.phatnguyen.todo.model.Todo;
 
 public class CreateItemsActivity extends AppCompatActivity {
-    Button btnNgay, btnGio;
+
+    Button btnNgay, btnGio,btnSaveItem,btnCancel;
+    EditText edtTenCongViec,edtDiaDiem;
+    CheckBox ckNhacNho,ckHoanTat;
+    Bundle itemBundle = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,16 +29,24 @@ public class CreateItemsActivity extends AppCompatActivity {
         Intent callerIntent = getIntent();
         Bundle list = new Bundle();
         list = callerIntent.getBundleExtra("list");
-        String tenList = list.getString("tenList");
-        Toast.makeText(this,tenList,Toast.LENGTH_LONG).show();
-
         getControls();
         setDefault();
         addEvents();
+        if(list.containsKey("action")){
+            Todo todo = (Todo) list.getSerializable("item");
+            itemBundle.putString("idList",todo.getTODO_FK());
+            showItem(todo);
+        }
     }
     private void getControls(){
         btnNgay = (Button) findViewById(R.id.btnNgay);
         btnGio = (Button) findViewById(R.id.btnGio);
+        btnSaveItem = (Button) findViewById(R.id.btnSaveItem);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
+        edtTenCongViec = (EditText) findViewById(R.id.edtTenCongViec);
+        edtDiaDiem = (EditText) findViewById(R.id.edtDiaDiem);
+        ckNhacNho = (CheckBox) findViewById(R.id.ckNhacNho);
+        ckHoanTat = (CheckBox) findViewById(R.id.ckHoanTat);
     }
     private  void setDefault(){
         String date = MyUtility.getCurrentDate();
@@ -53,8 +68,22 @@ public class CreateItemsActivity extends AppCompatActivity {
                 showTimePickerDialog();
             }
         });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String idList = "";
+                goBackList(idList);
+            }
+        });
+    }
+    private void goBackList(String idList) {
+        Intent intent = new Intent(CreateItemsActivity.this,CreateListActivity.class);
+        // Lay thong tin list tu idList de hien thi lai man hinh
     }
 
+    /**
+     * Hàm hiển thị DatePickerDialog
+     */
     private void showDatePickerDialog() {
         DatePickerDialog.OnDateSetListener callBack = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -76,8 +105,7 @@ public class CreateItemsActivity extends AppCompatActivity {
     /**
      * Hàm hiển thị TimePickerDialog
      */
-    public void showTimePickerDialog()
-    {
+    private void showTimePickerDialog() {
         TimePickerDialog.OnTimeSetListener callback=new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view,
                                   int hourOfDay, int minute) {
@@ -105,5 +133,24 @@ public class CreateItemsActivity extends AppCompatActivity {
         time.show();
 
 
+    }
+    private void showItem(Todo item){
+        edtTenCongViec.setText(item.getCONTENT());
+        btnNgay.setText(item.getDATE());
+        btnGio.setText(item.getHOUR());
+        edtDiaDiem.setText(item.getLOCATION());
+        if(item.getIsNOTIFICATION()==1){
+            ckNhacNho.setChecked(true);
+        }
+        else
+        {
+            ckNhacNho.setChecked(false);
+        }
+        if(item.getSTATUS()==1){
+            ckHoanTat.setChecked(true);
+        }
+        else{
+            ckHoanTat.setChecked(false);
+        }
     }
 }

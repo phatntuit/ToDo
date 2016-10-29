@@ -59,6 +59,7 @@ public class ToDoHelper {
         contentValues.put(Todo.COL_COLOR,todo.getCOLOR());
         contentValues.put(Todo.COL_NGAYTAO,todo.getNGAYTAO());
         contentValues.put(Todo.COL_NGAYSUA,todo.getNGAYSUA());
+        contentValues.put(Todo.COL_NHACNHO,todo.getIsNOTIFICATION());
 
         return database.insert(Todo.TABLE_NAME,null,contentValues);
     }
@@ -73,17 +74,4 @@ public class ToDoHelper {
         else
             return cursor.getInt(0) + 1;
     }
-    /*
-    for loop data use cursor
-            for(int i = 0; i < cursor.getCount(); i++){
-            cursor.moveToPosition(i);
-            int id = cursor.getInt(0);
-            String ten = cursor.getString(1);
-            String sdt = cursor.getString(2);
-            byte[] anh = cursor.getBlob(3);
-            list.add(new NhanVien(id, ten, sdt, anh));
-        }
-     */
-
-
 }

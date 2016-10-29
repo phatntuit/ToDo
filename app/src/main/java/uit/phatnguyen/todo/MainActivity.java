@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 String title = tdl.getTITLE();
                 //Toast.makeText(MainActivity.this,"Da vao item select",Toast.LENGTH_LONG).show();
                 Log.d("item click","Da vao roi");
-                displayList(idlist,title);
+                requestDisplayList(idlist,title);
             }
         });
         lvToDoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-    private void displayList(int id, String title) {
+    private void requestDisplayList(int id, String title) {
         Intent intent = new Intent(MainActivity.this,CreateListActivity.class);
         mainBundle.putInt("id",id);
         mainBundle.putString("title",title);
