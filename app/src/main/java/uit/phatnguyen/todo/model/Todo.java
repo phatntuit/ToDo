@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Todo implements Serializable{
     private int ID;
-    private String TODO_FK;
+    private int TODO_FK;
     private String CONTENT;
     private String DATE;
     private String HOUR;
@@ -41,10 +41,10 @@ public class Todo implements Serializable{
     public void setID(int ID) {
         this.ID = ID;
     }
-    public String getTODO_FK() {
+    public int getTODO_FK() {
         return TODO_FK;
     }
-    public void setTODO_FK(String TODO_FK) {
+    public void setTODO_FK(int TODO_FK) {
         this.TODO_FK = TODO_FK;
     }
     public String getCONTENT() {

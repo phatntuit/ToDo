@@ -34,7 +34,7 @@ public class CreateItemsActivity extends AppCompatActivity {
         addEvents();
         if(list.containsKey("action")){
             Todo todo = (Todo) list.getSerializable("item");
-            itemBundle.putString("idList",todo.getTODO_FK());
+            itemBundle.putInt("idList",todo.getTODO_FK());
             showItem(todo);
         }
     }

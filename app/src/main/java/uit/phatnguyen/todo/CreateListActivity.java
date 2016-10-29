@@ -12,11 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.model.Todo;
+import uit.phatnguyen.todo.model.TodoList;
+
 /**
  * Created by PhatNguyen on 2016-10-25.
  */
@@ -25,6 +28,7 @@ public class CreateListActivity extends AppCompatActivity {
     EditText edtTenList;
     TextView tvNotification;
     Bundle listBundle = new Bundle();
+    ToDoHelper toDoHelper ;
     //Listview
     ListView lvToDoItems;
     ArrayList<Todo> arrayListTodo = new ArrayList<Todo>();
@@ -33,6 +37,8 @@ public class CreateListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todo_items);
+        //Khoi tao database
+        toDoHelper = new ToDoHelper(CreateListActivity.this);
         getControls();
         //lấy intent gọi Activity này
         Intent callerIntent = getIntent();
@@ -40,15 +46,21 @@ public class CreateListActivity extends AppCompatActivity {
         //qua hàm intent.putExtra("main",mainBundle);
         Bundle main = new Bundle();
         main = callerIntent.getBundleExtra("main");
-        int id = main.getInt("id");
-        //Lưu id vao bundle của activity này
-        listBundle.putInt("id",id);
+        int idList = main.getInt("idList");
+        //Lưu idlist vao bundle của activity này
+        listBundle.putInt("idList",idList);
         addEvents();
         if(main.containsKey("title")){
-            Log.d("id",id+"");
-            String title = main.getString("title")+"";
-            edtTenList.setText(title);
-            showList(id);
+            Log.d("id list", idList + "");
+
+            String listTitle = main.getString("title") +"";
+            //Cap nhat action la update
+            listBundle.putString("action","update");
+            listBundle.putString("title",listTitle);
+
+            edtTenList.setText(listTitle);
+            //Show todoList co id la idList ra man hinh
+            showList(idList);
         }
     }
     private void getControls(){
@@ -129,9 +141,29 @@ public class CreateListActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void saveList(){
+        String listTitle;
+        int listId;
+        TodoList tdl;
         if(edtTenList.getText().toString().trim().length() ==0){
-            String tenlist = MyUtility.getCurrentDate() + "-" + MyUtility.getCurrentTime();
-            edtTenList.setText(tenlist);
+            String title = MyUtility.getCurrentDate() + "-" + MyUtility.getCurrentTime();
+            edtTenList.setText(title);
+        }
+        listTitle = edtTenList.getText().toString();
+
+        tdl = new TodoList();
+        listId = toDoHelper.getNext(tdl.TABLE_NAME,tdl.COL_ID);
+        tdl.setID(listId);
+        tdl.setTITLE(listTitle);
+        long ketqua = toDoHelper.insertToDoList(tdl);
+        if(ketqua == -1){
+            Toast.makeText(this,
+                    "Lỗi khi thêm TodoList title :"+tdl.getTITLE().toString(),
+                    Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(this,
+                    "Thêm thành công TodoList title :"+tdl.getTITLE().toString(),
+                    Toast.LENGTH_LONG).show();
         }
     }
     private void showList(int idList){
@@ -150,7 +182,7 @@ public class CreateListActivity extends AppCompatActivity {
                 cursor.moveToPosition(i);
                 //cursor.getColumnIndex(TodoList.COL_TITLE) : LAY INDEX CUA COLUMN TITLE
                 int ID = cursor.getInt(cursor.getColumnIndex(Todo.COL_ID));
-                String TODO_FK = cursor.getString(cursor.getColumnIndex(Todo.COL_TODOFK));
+                int TODO_FK = cursor.getInt(cursor.getColumnIndex(Todo.COL_TODOFK));
                 String CONTENT = cursor.getString(cursor.getColumnIndex(Todo.COL_CONTENT));
                 String DATE = cursor.getString(cursor.getColumnIndex(Todo.COL_DATE));
                 String HOUR = cursor.getString(cursor.getColumnIndex(Todo.COL_HOUR));

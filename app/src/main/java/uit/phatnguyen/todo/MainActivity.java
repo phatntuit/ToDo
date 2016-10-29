@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void requestDisplayList(int id, String title) {
         Intent intent = new Intent(MainActivity.this,CreateListActivity.class);
-        mainBundle.putInt("id",id);
+        mainBundle.putInt("idList",id);
         mainBundle.putString("title",title);
         intent.putExtra("main",mainBundle);
         startActivity(intent);

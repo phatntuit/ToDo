@@ -1,5 +1,7 @@
 package uit.phatnguyen.todo.model;
 
+import uit.phatnguyen.todo.MyUtility;
+
 /**
  * Created by PhatNguyen on 2016-10-26.
  */
@@ -7,7 +9,7 @@ package uit.phatnguyen.todo.model;
 public class TodoList {
     private int ID;
     private String TITLE;
-    private String COLOR = "YELLOW";
+    private String COLOR ;
     private String NGAYTAO;
     private String NGAYSUA;
 
@@ -20,6 +22,9 @@ public class TodoList {
     public final static String TABLE_NAME = "TODOLIST";
 
     public TodoList() {
+       this.COLOR = "YELLOW";
+        this.NGAYSUA = MyUtility.getCurrentDate();
+        this.NGAYTAO = MyUtility.getCurrentDate();
     }
 
     public TodoList(int ID, String TITLE, String COLOR, String NGAYTAO, String NGAYSUA) {
