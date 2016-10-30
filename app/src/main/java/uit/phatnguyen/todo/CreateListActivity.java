@@ -62,7 +62,6 @@ public class CreateListActivity extends AppCompatActivity {
             showList(listId,listTitle);
         }
     }
-
     private void getControls(){
         btnAddItems = (Button) findViewById(R.id.btnAddItem);
         btnSaveList = (Button) findViewById(R.id.btnSaveList);
@@ -82,6 +81,26 @@ public class CreateListActivity extends AppCompatActivity {
                 todo = (Todo) arrayListTodo.get(position);
                 System.out.println("Todo dang request display la :\n" +todo.toString());
                 requestDisplayItem(todo);
+            }
+        });
+        lvToDoItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Todo td = (Todo) arrayListTodo.get(position);
+                int itemId = td.getID();
+                int kq = 1;
+                kq = toDoHelper.deleteToDoItem(itemId,1);
+                if(kq == 1){
+                    arrayListTodo.remove(position);
+                    arrayAdapterTodo.notifyDataSetChanged();
+                    Toast.makeText(CreateListActivity.this,"Da xoa ToDo item co id = "+itemId,
+                            Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(CreateListActivity.this,"Loi khi xoa ToDo item co id = "+itemId,
+                            Toast.LENGTH_LONG).show();
+                }
+                return false;
             }
         });
 

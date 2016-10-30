@@ -3,6 +3,7 @@ package uit.phatnguyen.todo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,7 @@ import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.model.TodoList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private Boolean exit = false;
     Button btnAddList;
     ListView lvToDoList;
     TextView tvNow;
@@ -31,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
     String date;
     //dung de gui gia tri qua cac activity
     Bundle mainBundle ;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +79,20 @@ public class MainActivity extends AppCompatActivity {
         lvToDoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this,"Da vao item  long click",Toast.LENGTH_LONG).show();
+                TodoList tdl = arrayListTodoList.get(position);
+                int listId = tdl.getID();
+                Boolean kq = false;
+                kq = toDoHelper.deleteToDoList(listId);
+                if(kq == true){
+                    arrayListTodoList.remove(position);
+                    arrayAdapterTodoList.notifyDataSetChanged();
+                    Toast.makeText(MainActivity.this,"Da xoa listToDo co id = "+listId,
+                            Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this,"Loi khi xoa listToDo co id = "+listId
+                            ,Toast.LENGTH_LONG).show();
+                }
                 return false;
             }
         });
@@ -138,6 +147,24 @@ public class MainActivity extends AppCompatActivity {
         mainBundle.putString("action","update");
         intent.putExtra("toList",mainBundle);
         startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Nhan Back mot lan nua de thoat!",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
+
     }
     public class processMyFunct implements View.OnClickListener{
         @Override

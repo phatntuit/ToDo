@@ -29,7 +29,7 @@ public class ToDoHelper {
     }
     public Cursor getQuery(String sql,String[] params){
 
-        Cursor cursor;
+        Cursor cursor = null;
         if (params == null){
             cursor = database.rawQuery(sql,null);
         }
@@ -198,5 +198,48 @@ public class ToDoHelper {
             cursor.close();
         }
         return arr;
+    }
+    public int deleteToDoItem(int id, int type){
+        String[] whereArgs = new String[]{id+""};
+        // type = 1 xoa item khi biet itemId
+        //type = 0 xoa iten khi biet listId
+        int kq = 0;
+        String where_clause = (type == 1) ? Todo.WHERE_ID : Todo.WHERE_TODOFK;
+
+        kq = database.delete(Todo.TABLE_NAME,where_clause,whereArgs);
+        return kq;
+    }
+    public boolean deleteToDoList(int listId){
+        String[] whereArgs = new String[]{listId+""};
+        int kqItem = 0;
+        int kqLsit = 0;
+        //Lay so item cua list truoc
+        int numItems = 0;
+        //do minh can xoa item dua vao listId nen truyen vao type = 0
+        try{
+            numItems = numItemList(listId);
+            kqItem = deleteToDoItem(listId,0);
+            kqLsit = database.delete(TodoList.TABLE_NAME,TodoList.WHERE_ID,whereArgs);
+        }catch (SQLiteException ex){
+            System.out.println("Loi : "+ex.getMessage());
+        }
+        if(kqItem == numItems && kqLsit == 1)
+            return true;
+        return false;
+    }
+    public int numItemList(int listId){
+        Cursor cursor = null;
+        int num = 0;
+        try{
+            cursor  = getQuery("SELECT * FROM TODOITEMS WHERE TODO_FK = " + listId,null);
+            cursor.moveToFirst();
+            num = cursor.getCount();
+        }catch (SQLiteException ex){
+            System.out.println("numItemList error : " + ex.getMessage());
+        }
+        finally {
+            cursor.close();
+        }
+        return  num;
     }
 }

@@ -187,35 +187,44 @@ public class CreateItemsActivity extends AppCompatActivity {
 
         int itemId = itemBundle.getInt("itemId");
         System.out.println("Item Id o saveItemACction la : "+itemId);
-        String noidung = edtTenCongViec.getText().toString();
-        String ngay = btnNgay.getText().toString();
-        String gio = btnGio.getText().toString();
-        String diadiem = edtDiaDiem.getText().toString();
+        String noidung = edtTenCongViec.getText().toString()+"";
+        String ngay = btnNgay.getText().toString()+"";
+        String gio = btnGio.getText().toString()+"";
+        String diadiem = edtDiaDiem.getText().toString() +"";
         int nhacnho = ckNhacNho.isChecked() ? 1 : 0 ;
         int hoantat = ckHoanTat.isChecked() ? 1 : 0 ;
+        if(noidung.trim().length()==0 || ngay.trim().length()==0 ||
+                gio.trim().length()==0 || diadiem.trim().length()==0){
+            System.out.println("Loi!Dien thieu thong tin");
+            Toast.makeText(this,
+                    "Lỗi ! Vui long dien day du thong tin!",
+                    Toast.LENGTH_LONG).show();
 
-        //set gia tri cho todo
-        todo.setID(itemId);
-        todo.setCONTENT(noidung);
-        todo.setDATE(ngay);
-        todo.setHOUR(gio);
-        todo.setLOCATION(diadiem);
-        todo.setIsNOTIFICATION(nhacnho);
-        todo.setSTATUS(hoantat);
-        todo.setNGAYSUA(MyUtility.getCurrentDate());
+        }
+        else{
+            //set gia tri cho todo
+            todo.setID(itemId);
+            todo.setCONTENT(noidung);
+            todo.setDATE(ngay);
+            todo.setHOUR(gio);
+            todo.setLOCATION(diadiem);
+            todo.setIsNOTIFICATION(nhacnho);
+            todo.setSTATUS(hoantat);
+            todo.setNGAYSUA(MyUtility.getCurrentDate());
 
-        switch (iaction){
-            case "new":
-                int listId = itemBundle.getInt("listId");
-                todo.setTODO_FK(listId);
-                todo.setNGAYTAO(MyUtility.getCurrentDate());
-                System.out.println("Case new and item id ="+itemId);
-                insertTodo(todo);
-                break;
-            case "update":
-                System.out.println("Case update and item id ="+itemId);
-                updateTodo(todo);
-                break;
+            switch (iaction){
+                case "new":
+                    int listId = itemBundle.getInt("listId");
+                    todo.setTODO_FK(listId);
+                    todo.setNGAYTAO(MyUtility.getCurrentDate());
+                    System.out.println("Case new and item id ="+itemId);
+                    insertTodo(todo);
+                    break;
+                case "update":
+                    System.out.println("Case update and item id ="+itemId);
+                    updateTodo(todo);
+                    break;
+            }
         }
     }
     private void insertTodo(Todo todo){

@@ -33,6 +33,7 @@ public class Todo implements Serializable{
 
     public final static String TABLE_NAME = "TODOITEMS";
     public final static String WHERE_ID= " ID = ?";
+    public final static String WHERE_TODOFK = " TODO_FK = ?";
 
     public Todo() {
         this.COLOR = "GREEN";
