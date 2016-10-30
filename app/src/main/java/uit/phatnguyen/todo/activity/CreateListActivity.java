@@ -1,4 +1,4 @@
-package uit.phatnguyen.todo;
+package uit.phatnguyen.todo.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import uit.phatnguyen.todo.helper.MyUtility;
+import uit.phatnguyen.todo.R;
 import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.model.Todo;
 import uit.phatnguyen.todo.model.TodoList;

@@ -1,4 +1,4 @@
-package uit.phatnguyen.todo;
+package uit.phatnguyen.todo.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import uit.phatnguyen.todo.helper.MyUtility;
+import uit.phatnguyen.todo.R;
 import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.model.Todo;
 
@@ -63,7 +65,7 @@ public class CreateItemsActivity extends AppCompatActivity {
             itemBundle.putInt("itemId",itemId);
             System.out.println("Item ID(new) la : "+ itemBundle.getInt("itemId"));
         }
-        System.out.println("Test getdate time :"+MyUtility.getCurrentDateTime());
+        System.out.println("Test getdate time :"+ MyUtility.getCurrentDateTime());
 
     }
     private void getControls(){

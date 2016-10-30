@@ -1,6 +1,6 @@
 package uit.phatnguyen.todo.model;
 
-import uit.phatnguyen.todo.MyUtility;
+import uit.phatnguyen.todo.helper.MyUtility;
 
 /**
  * Created by PhatNguyen on 2016-10-26.
