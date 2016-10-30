@@ -119,8 +119,8 @@ public class ToDoHelper {
         Cursor cursor = getQuery(query,null);
         try {
             cursor.moveToFirst();
-            if(cursor.isNull(0))
-                id = 0;
+            if(cursor.getCount()==0)
+                id = 1;
             else
                 id = cursor.getInt(0) + 1;
         }catch (SQLiteException ex){

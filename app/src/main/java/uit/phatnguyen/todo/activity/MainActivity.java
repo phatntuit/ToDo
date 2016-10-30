@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,9 +15,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import uit.phatnguyen.todo.helper.MyUtility;
 import uit.phatnguyen.todo.R;
+import uit.phatnguyen.todo.adapter.TDLArrayAdapter;
 import uit.phatnguyen.todo.db.ToDoHelper;
+import uit.phatnguyen.todo.helper.MyUtility;
 import uit.phatnguyen.todo.model.TodoList;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +29,12 @@ public class MainActivity extends AppCompatActivity {
     ToDoHelper toDoHelper ;
     TextView tvNotification;
     ArrayList<TodoList> arrayListTodoList;
-    ArrayAdapter<TodoList> arrayAdapterTodoList;
+
+    //ArrayAdapter<TodoList> arrayAdapterTodoList;
+
+    //customize adapter
+    TDLArrayAdapter myTDLAdapter;
+
     //luu ngay hien tai
     String date;
     //dung de gui gia tri qua cac activity
@@ -60,9 +65,14 @@ public class MainActivity extends AppCompatActivity {
         tvNow.setText(date);
         //set up list view
         arrayListTodoList = new ArrayList<TodoList>();
-        arrayAdapterTodoList = new ArrayAdapter<TodoList>(MainActivity.this,
-                android.R.layout.simple_list_item_1,arrayListTodoList);
-        lvToDoList.setAdapter(arrayAdapterTodoList);
+        /*arrayAdapterTodoList = new ArrayAdapter<TodoList>(MainActivity.this,
+                android.R.layout.simple_list_item_1,arrayListTodoList);*/
+        //test my adapter
+        myTDLAdapter = new TDLArrayAdapter(MainActivity.this,
+                R.layout.todo_list_row,arrayListTodoList);
+
+        //lvToDoList.setAdapter(arrayAdapterTodoList);
+        lvToDoList.setAdapter(myTDLAdapter);
     }
     private void addEvents(){
         btnAddList.setOnClickListener(new processMyFunct());
@@ -87,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
                 kq = toDoHelper.deleteToDoList(listId);
                 if(kq == true){
                     arrayListTodoList.remove(position);
-                    arrayAdapterTodoList.notifyDataSetChanged();
+                    //arrayAdapterTodoList.notifyDataSetChanged();
+                    //test my custom adapter
+                    myTDLAdapter.notifyDataSetChanged();
                     Toast.makeText(MainActivity.this,"Da xoa listToDo co id = "+listId,
                             Toast.LENGTH_LONG).show();
                 }
@@ -123,7 +135,8 @@ public class MainActivity extends AppCompatActivity {
                 //them tdl vao mang arraylist
                 arrayListTodoList.add(tdl);
                 //cap nhat adapter
-                arrayAdapterTodoList.notifyDataSetChanged();
+                //arrayAdapterTodoList.notifyDataSetChanged();
+                myTDLAdapter.notifyDataSetChanged();
             }
             //System.out.println("So phan tu arraylist todolist :" + arrayListTodoList.size());
         }

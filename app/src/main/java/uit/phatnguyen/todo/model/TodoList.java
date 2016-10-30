@@ -24,8 +24,8 @@ public class TodoList {
 
     public TodoList() {
        this.COLOR = "YELLOW";
-        this.NGAYSUA = MyUtility.getCurrentDate();
-        this.NGAYTAO = MyUtility.getCurrentDate();
+        this.NGAYSUA = MyUtility.getCurrentDateTime();
+        this.NGAYTAO = MyUtility.getCurrentDateTime();
     }
 
     public TodoList(int ID, String TITLE, String COLOR, String NGAYTAO, String NGAYSUA) {

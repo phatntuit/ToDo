@@ -81,7 +81,7 @@ public class CreateItemsActivity extends AppCompatActivity {
     private  void setDefault(){
         String date = MyUtility.getCurrentDate();
         String time = MyUtility.getCurrentTime();
-
+        System.out.println(" date set default la :"+date);
         btnGio.setText(time);
         btnNgay.setText(date);
     }
@@ -116,12 +116,14 @@ public class CreateItemsActivity extends AppCompatActivity {
             }
         };
         int ngay,thang,nam;
-        String namsinh[] = btnNgay.getText().toString().split("-");
-        ngay = Integer.parseInt(namsinh[0]);
-        thang = Integer.parseInt(namsinh[1]);
-        nam = Integer.parseInt(namsinh[2]);
+        String date[] = btnNgay.getText().toString().split("-");
+        ngay = Integer.parseInt(date[0]);
+        thang = Integer.parseInt(date[1]);
+        nam = Integer.parseInt(date[2]);
 
-        DatePickerDialog dateDialog=new DatePickerDialog(this, callBack, nam, thang, ngay);
+        System.out.println("Ngay :" + ngay + " thang :"+thang + " nam :"+nam);
+
+        DatePickerDialog dateDialog = new DatePickerDialog(this, callBack, nam, thang, ngay);
         dateDialog.setTitle("Chọn Ngày");
         dateDialog.show();
     }
@@ -212,13 +214,12 @@ public class CreateItemsActivity extends AppCompatActivity {
             todo.setLOCATION(diadiem);
             todo.setIsNOTIFICATION(nhacnho);
             todo.setSTATUS(hoantat);
-            todo.setNGAYSUA(MyUtility.getCurrentDate());
+            todo.setNGAYSUA(MyUtility.getCurrentDateTime());
 
             switch (iaction){
                 case "new":
                     int listId = itemBundle.getInt("listId");
                     todo.setTODO_FK(listId);
-                    todo.setNGAYTAO(MyUtility.getCurrentDate());
                     System.out.println("Case new and item id ="+itemId);
                     insertTodo(todo);
                     break;

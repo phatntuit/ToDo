@@ -2,6 +2,8 @@ package uit.phatnguyen.todo.model;
 
 import java.io.Serializable;
 
+import uit.phatnguyen.todo.helper.MyUtility;
+
 /**
  * Created by PhatNguyen on 2016-10-26.
  */
@@ -37,6 +39,8 @@ public class Todo implements Serializable{
 
     public Todo() {
         this.COLOR = "GREEN";
+        this.NGAYSUA = MyUtility.getCurrentDateTime();
+        this.NGAYTAO = MyUtility.getCurrentDateTime();
     }
     public int getID() {
         return ID;

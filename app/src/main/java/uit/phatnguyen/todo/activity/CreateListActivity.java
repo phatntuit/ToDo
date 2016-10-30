@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -16,9 +15,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import uit.phatnguyen.todo.helper.MyUtility;
 import uit.phatnguyen.todo.R;
+import uit.phatnguyen.todo.adapter.TDArrayAdapter;
 import uit.phatnguyen.todo.db.ToDoHelper;
+import uit.phatnguyen.todo.helper.MyUtility;
 import uit.phatnguyen.todo.model.Todo;
 import uit.phatnguyen.todo.model.TodoList;
 
@@ -34,7 +34,9 @@ public class CreateListActivity extends AppCompatActivity {
     //Listview
     ListView lvToDoItems ;
     ArrayList<Todo> arrayListTodo ;
-    ArrayAdapter<Todo> arrayAdapterTodo ;
+
+    //ArrayAdapter<Todo> arrayAdapterTodo ;
+    TDArrayAdapter myTDAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,10 @@ public class CreateListActivity extends AppCompatActivity {
                 kq = toDoHelper.deleteToDoItem(itemId,1);
                 if(kq == 1){
                     arrayListTodo.remove(position);
-                    arrayAdapterTodo.notifyDataSetChanged();
+                    //arrayAdapterTodo.notifyDataSetChanged();
+                    //test custom adapter
+                    myTDAdapter.notifyDataSetChanged();
+
                     Toast.makeText(CreateListActivity.this,"Da xoa ToDo item co id = "+itemId,
                             Toast.LENGTH_LONG).show();
                 }
@@ -109,9 +114,12 @@ public class CreateListActivity extends AppCompatActivity {
     }
     private void setDefault(){
         arrayListTodo = new ArrayList<Todo>();
-        arrayAdapterTodo = new ArrayAdapter<Todo>(this,
-                android.R.layout.simple_list_item_1,arrayListTodo);
-        lvToDoItems.setAdapter(arrayAdapterTodo);
+        /*arrayAdapterTodo = new ArrayAdapter<Todo>(this,
+                android.R.layout.simple_list_item_1,arrayListTodo);*/
+        myTDAdapter = new TDArrayAdapter(this,
+                R.layout.todo_item_row,arrayListTodo);
+        //lvToDoItems.setAdapter(arrayAdapterTodo);
+        lvToDoItems.setAdapter(myTDAdapter);
     }
     private void requestDisplayItem(Todo item) {
         Intent intent = new Intent(CreateListActivity.this,CreateItemsActivity.class);
@@ -235,7 +243,9 @@ public class CreateListActivity extends AppCompatActivity {
                 arrayListTodo.add(td);
                 System.out.println("Da them vao arrayListTodo td ="+td.toString());
             }
-            arrayAdapterTodo.notifyDataSetChanged();
+            //arrayAdapterTodo.notifyDataSetChanged();
+            //custom adapter
+            myTDAdapter.notifyDataSetChanged();
         }
     }
     public ArrayList<Todo> getList(int listId){

@@ -72,18 +72,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:textSize="10pt"
-                android:text="28/09/2016"
-                android:hint="Ngay">
+                android:textSize="10pt">
             </Button>
             <Button
                 android:id="@+id/btnGio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:textSize="10pt"
-                android:text="08:00"
-                android:hint="Gio">
+                android:textSize="10pt">
             </Button>
         </TableRow>
         <TableRow
