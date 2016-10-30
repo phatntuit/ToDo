@@ -7,17 +7,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right">
+
         <Button
             android:id="@+id/btnSaveItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="Save" />
+            android:text="@string/btnSaveItem" />
+
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"/>
+            android:text="@string/btnCancel"/>
     </LinearLayout>
     <TableLayout
         android:layout_width="match_parent"
@@ -35,7 +37,7 @@
                 android:layout_column="0"
                 android:textStyle="bold"
                 android:textSize="10pt"
-                android:text="Nội dung"
+                android:text="@string/tvContent"
                 android:id="@+id/textView2" />
 
             <EditText
@@ -47,7 +49,7 @@
                 android:maxLines="3"
                 android:layout_span="2"
                 android:textStyle="bold"
-                android:hint="Nội dung công việc">
+                android:hint="@string/hintContent">
                 <requestFocus />
             </EditText>
         </TableRow>
@@ -62,7 +64,7 @@
                 android:layout_column="0"
                 android:textSize="10pt"
                 android:textStyle="bold"
-                android:text="Thời gian"
+                android:text="@string/tvThoiGian"
                 android:id="@+id/textView" />
 
             <Button
@@ -93,7 +95,7 @@
                 android:layout_column="0"
                 android:textSize="10pt"
                 android:textStyle="bold"
-                android:text="Địa điểm"
+                android:text="@string/tvDiaDiem"
                 android:id="@+id/textView1" />
 
             <EditText
@@ -104,7 +106,7 @@
                 android:layout_span="2"
                 android:textSize="10pt"
                 android:maxLines="3"
-                android:hint="Tây Ninh">
+                android:hint="@string/hintDiaDiem">
             </EditText>
         </TableRow>
 
@@ -117,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10pt"
                 android:textStyle="bold"
-                android:hint="Nhắc nhở"
+                android:hint="@string/ckNhacNho"
                 android:layout_column="0" />
             <CheckBox
                 android:id="@+id/ckHoanTat"
@@ -126,7 +128,7 @@
                 android:textSize="10pt"
                 android:textStyle="bold"
                 android:layout_column="1"
-                android:hint="Hoàn tất"
+                android:hint="@string/ckHoanTat"
                 android:layout_gravity="right"/>
         </TableRow>
     </TableLayout>

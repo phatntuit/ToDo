@@ -151,9 +151,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (exit) {
+            //Xoa bundle truoc khi thoat
+            mainBundle.clear();
             finish(); // finish activity
         } else {
-            Toast.makeText(this, "Nhan Back mot lan nua de thoat!",
+            Toast.makeText(this, "Nhấn Back một lần nữa để thoát!",
                     Toast.LENGTH_SHORT).show();
             exit = true;
             new Handler().postDelayed(new Runnable() {

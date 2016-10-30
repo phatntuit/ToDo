@@ -276,6 +276,8 @@ public class CreateItemsActivity extends AppCompatActivity {
                     listId = itemBundle.getInt("listId");
                     System.out.println("listId lay duoc o btnCancel la :"+listId);
                     goBackList(listId);
+                    //Xoa bundle
+                    itemBundle.clear();
                     break;
                 case R.id.btnSaveItem:
                     saveItemAction();

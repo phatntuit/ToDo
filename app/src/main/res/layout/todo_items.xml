@@ -13,7 +13,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="TEN DANH SACH CONG VIEC"
+        android:hint="@string/hintTenList"
         android:id="@+id/edtTenList"
         android:maxLines="3"
         android:textSize="12pt" />
@@ -26,13 +26,13 @@
             android:id="@+id/btnAddItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="@string/btnAddItem" />
 
         <Button
             android:id="@+id/btnSaveList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="@string/btnSaveList" />
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

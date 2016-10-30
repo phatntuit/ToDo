@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Todo</string>
+    <string name="app_name">Quản lý công việc</string>
+    <string name="btnAddList">Tạo mới</string>
+    <string name="btnSaveList">Lưu danh sách</string>
+    <string name="btnSaveItem">Lưu công việc</string>
+    <string name="btnCancel">Huỷ bỏ</string>
+    <string name="btnBack">Trở về</string>
+    <string name="btnAddItem">Thêm công việc</string>
+    <string name="tvContent">Nội dung</string>
+    <string name="hintContent">Nội dung công việc</string>
+    <string name="tvThoiGian">Thời gian</string>
+    <string name="tvDiaDiem">Địa điểm</string>
+    <string name="hintDiaDiem">Tây Ninh</string>
+    <string name="hintTenList">Tên danh sách công việc</string>
+    <string name="ckNhacNho">Nhắc nhở</string>
+    <string name="ckHoanTat">Hoàn tất</string>
 </resources>

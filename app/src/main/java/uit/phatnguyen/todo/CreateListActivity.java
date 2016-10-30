@@ -20,8 +20,6 @@ import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.model.Todo;
 import uit.phatnguyen.todo.model.TodoList;
 
-import static android.R.attr.action;
-
 /**
  * Created by PhatNguyen on 2016-10-25.
  */
@@ -122,36 +120,9 @@ public class CreateListActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void gobackMain() {
+        finish();
         Intent intent = new Intent(CreateListActivity.this,MainActivity.class);
         startActivity(intent);
-        /**
-         * activity 1 -> activity 2
-         * Tại activity 1
-         * //Tạo Intent để mở ResultActivity
-         Intent myIntent=new Intent(MainActivity.this, ResultActivity.class);
-         //Khai báo Bundle
-         Bundle bundle=new Bundle();
-         int a=Integer.parseInt(txta.getText().toString());
-         int b=Integer.parseInt(txtb.getText().toString());
-         //đưa dữ liệu riêng lẻ vào Bundle
-         bundle.putInt("soa", a);
-         bundle.putInt("sob", b);
-         //Đưa Bundle vào Intent
-         myIntent.putExtra("MyPackage", bundle);
-         //Mở Activity ResultActivity
-         startActivity(myIntent);
-         */
-        /**
-         * Tại activity 2
-         * //lấy intent gọi Activity này
-         Intent callerIntent=getIntent();
-         //có intent rồi thì lấy Bundle dựa vào MyPackage
-         Bundle packageFromCaller=
-         callerIntent.getBundleExtra("MyPackage");
-         //Có Bundle rồi thì lấy các thông số dựa vào soa, sob
-         int a=packageFromCaller.getInt("soa");
-         int b=packageFromCaller.getInt("sob");
-         */
     }
     private void addItemsAction() {
         Intent intent = new Intent(CreateListActivity.this,CreateItemsActivity.class);
@@ -207,7 +178,9 @@ public class CreateListActivity extends AppCompatActivity {
                 break;
             case "update":
                 updateList(tdl);
-                /*gobackMain();*/
+                //Xoa Bundle
+                listBundle.clear();
+                gobackMain();
                 break;
             default:
                 System.out.println("Xay ra loi khi them list!");
@@ -323,11 +296,12 @@ public class CreateListActivity extends AppCompatActivity {
                     break;
                 case R.id.btnBack:
                     gobackMain();
+                    //Xoa Bundle
+                    listBundle.clear();
                     break;
                 default:
                     break;
             }
         }
     }
-
 }
