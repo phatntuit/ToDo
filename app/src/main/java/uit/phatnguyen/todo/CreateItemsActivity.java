@@ -197,7 +197,7 @@ public class CreateItemsActivity extends AppCompatActivity {
                 gio.trim().length()==0 || diadiem.trim().length()==0){
             System.out.println("Loi!Dien thieu thong tin");
             Toast.makeText(this,
-                    "Lỗi ! Vui long dien day du thong tin!",
+                    "Lỗi ! Vui lòng điền đầy đủ thông tin!",
                     Toast.LENGTH_LONG).show();
 
         }

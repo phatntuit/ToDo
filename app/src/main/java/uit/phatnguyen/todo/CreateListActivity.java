@@ -20,6 +20,8 @@ import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.model.Todo;
 import uit.phatnguyen.todo.model.TodoList;
 
+import static android.R.attr.action;
+
 /**
  * Created by PhatNguyen on 2016-10-25.
  */
@@ -193,14 +195,12 @@ public class CreateListActivity extends AppCompatActivity {
 
         tdl = new TodoList();
         listId = listBundle.getInt("listId");
-
         tdl.setID(listId);
         tdl.setTITLE(listTitle);
-
         String action = listBundle.getString("action")+"";
-
+        /*
         System.out.println("listId trong ham saveListAction() cua CreateListActivity la " + listId);
-        System.out.println("action trong ham saveListAction() cua CreateListActivity la " + action);
+        System.out.println("action trong ham saveListAction() cua CreateListActivity la " + action);*/
         switch (action){
             case "new":
                 insertList(tdl);
