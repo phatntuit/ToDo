@@ -3,11 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <item name="black" type="color">#323435</item>
     <!--User define-->
-    <color name="blue">#4e92ea</color>
-    <color name="green">#69f0ae</color>
-    <color name="yellow">#ffeb3b</color>
-    <color name="black">#000000</color>
-    <color name="silver">#757575</color>
-    <color name="lessred">#ffcc80</color>
+    <item name="white" type="color">#F2F2F2</item>
+    <item name="blue" type="color">#C0E1F5</item>
+    <item name="purple" type="color">#CBC0FE</item>
+    <item name="green" type="color">#BCF0C8</item>
+    <item name="pink" type="color">#EFBCEF</item>
+    <item name="orange" type="color">#FFFFBB33</item>
+    <item name="red" type="color">#ff8a80</item>
+    <item name="yellow" type="color">#FCFBB2</item>
+    <item name="darkblue" type="color">#90caf9</item>
+    <item name="darkpurple" type="color">#9575cd</item>
+    <item name="darkgreen" type="color">#66bb6a</item>
+    <item name="darkorange" type="color">#deaa3a</item>
+    <item name="darkred" type="color">#c75148</item>
+
 </resources>

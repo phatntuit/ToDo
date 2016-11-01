@@ -23,7 +23,7 @@ public class TodoList {
     public final static String WHERE_ID = "ID =?";
 
     public TodoList() {
-       this.COLOR = "YELLOW";
+       this.COLOR = "white";
         this.NGAYSUA = MyUtility.getCurrentDateTime();
         this.NGAYTAO = MyUtility.getCurrentDateTime();
     }

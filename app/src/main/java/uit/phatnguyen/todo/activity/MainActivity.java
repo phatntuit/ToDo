@@ -83,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 tdl = arrayListTodoList.get(position);
                 int listId = tdl.getID();
                 String listTitle = tdl.getTITLE();
+                String listColor = tdl.getCOLOR();
                 //Toast.makeText(MainActivity.this,"Da vao item select",Toast.LENGTH_LONG).show();
                 Log.d("item click","Da vao roi");
-                requestDisplayList(listId,listTitle);
+                requestDisplayList(listId,listTitle,listColor);
             }
         });
         lvToDoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -150,15 +151,17 @@ public class MainActivity extends AppCompatActivity {
 
         int listId = toDoHelper.getNext(TodoList.TABLE_NAME,TodoList.COL_ID);
         mainBundle.putInt("listId",listId);
+        mainBundle.putString("listColor","white");//mac dinh la white
         mainBundle.putString("action","new");
         intent.putExtra("toList",mainBundle);
 
         startActivity(intent);
     }
-    private void requestDisplayList(int listId,String listTitle) {
+    private void requestDisplayList(int listId,String listTitle,String listColor) {
         Intent intent = new Intent(MainActivity.this,CreateListActivity.class);
         mainBundle.putInt("listId",listId);
         mainBundle.putString("listTitle",listTitle);
+        mainBundle.putString("listColor",listColor);
         mainBundle.putString("action","update");
         intent.putExtra("toList",mainBundle);
         startActivity(intent);

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:id="@+id/llDetailRow">
 
     <View
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="2dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tvNoiDung"
@@ -38,7 +38,7 @@
                 android:text="Di choi"
                 android:textAllCaps="true"
                 android:textStyle="bold"
-                android:textColor="@color/blue" />
+                android:textColor="@color/black" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,21 +46,27 @@
                 android:text="Tay Ninh"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
-            <TextView
-                android:id="@+id/tvDate"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="28-12-2016"
-                android:textColor="@color/black"
-                android:textStyle="italic"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="28-12-2016"
+                    android:textColor="@color/black"
+                    android:textStyle="italic"/>
 
-            <TextView
-                android:id="@+id/tvHour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="12:30"
-                android:textStyle="italic"/>
+                <TextView
+                    android:id="@+id/tvHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:textColor="@color/black"
+                    android:text="12:30"
+                    android:textStyle="italic"/>
+            </LinearLayout>
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -73,7 +79,7 @@
                 android:id="@+id/tvNgaySua"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12/12/2012"
+                android:text="Ngay sua"
                 android:maxLines="3"
                 android:textStyle="italic"/>
             <TextView
@@ -83,20 +89,24 @@
                 android:text="ID = 1 | listID = 2"
                 android:textStyle="italic"/>
         </LinearLayout>
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/imgHoanTat"
-            android:layout_gravity="right"
-            android:src="@drawable/nottick"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"/>
-
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chưa hoàn Tất"
-            android:textColor="@color/black"
-            android:id="@+id/tvHoanTat" />
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:id="@+id/imgHoanTat"
+                android:layout_gravity="left"
+                android:src="@drawable/nottick"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chưa Hoàn Tất"
+                android:textColor="@color/black"
+                android:id="@+id/tvHoanTat" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

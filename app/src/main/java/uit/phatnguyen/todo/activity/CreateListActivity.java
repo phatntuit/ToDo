@@ -9,16 +9,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import uit.phatnguyen.todo.R;
+import uit.phatnguyen.todo.adapter.ColorAdapter;
 import uit.phatnguyen.todo.adapter.TDArrayAdapter;
 import uit.phatnguyen.todo.db.ToDoHelper;
 import uit.phatnguyen.todo.helper.MyUtility;
+import uit.phatnguyen.todo.model.Color;
 import uit.phatnguyen.todo.model.Todo;
 import uit.phatnguyen.todo.model.TodoList;
 
@@ -38,6 +42,17 @@ public class CreateListActivity extends AppCompatActivity {
     //ArrayAdapter<Todo> arrayAdapterTodo ;
     TDArrayAdapter myTDAdapter;
 
+    //set color
+    Spinner spColorChooser ;
+    ArrayList<Color> colorArrayList ;
+    ColorAdapter colorAdapter;
+
+    //array cua colo trong file xml
+    int[] myIntColors;
+    String[] myStringColors;
+    LinearLayout llItemDetail;
+    LinearLayout llItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,20 +65,38 @@ public class CreateListActivity extends AppCompatActivity {
         Intent callerIntent = getIntent();
         //có intent rồi thì lấy Bundle dựa vào key "main" ở activity 1 mà ta đã gửi
         //qua hàm intent.putExtra("main",mainBundle);
-        Bundle main = new Bundle();
-        main = callerIntent.getBundleExtra("toList");
-        int listId = main.getInt("listId");
-        String action = main.getString("action") +"";
-        //Lưu idlist vao bundle của activity này
+        Bundle receivedBundle = new Bundle();
+        receivedBundle = callerIntent.getBundleExtra("toList");
+        int listId = receivedBundle.getInt("listId");
+        String listColor = receivedBundle.getString("listColor");
+        String action = receivedBundle.getString("action") +"";
+        int listColorIndex = 0;
+        if(receivedBundle.containsKey("listColorIndex")){
+            listColorIndex = receivedBundle.getInt("listColorIndex");
+            System.out.println("Lay listColorIndex o createlist "+listColorIndex);
+        }else{
+            //Lấy vị trí của listColor trong mảng colorArrayList để set vị trí cho spinner
+            listColorIndex = MyUtility.getIndex(colorArrayList,listColor);
+        }
+        spColorChooser.setSelection(listColorIndex);
+        int colorValue = colorArrayList.get(listColorIndex).getColorValue();
+        //set màu cho layout
+        llItem.setBackgroundColor(colorValue);
+
+        //Lưu listId,listColor,colorIndex vao bundle của activity này
         listBundle.putInt("listId",listId);
+        listBundle.putString("listColor",listColor);
+        listBundle.putInt("listColorIndex",listColorIndex);
+        //Cap nhat listTitle thanh ""
+        listBundle.putString("listTitle","");
         listBundle.putString("action",action);
         addEvents();
 
         if(action.equals("update")){
-            String listTitle = main.getString("listTitle");
+            String listTitle = receivedBundle.getString("listTitle");
             listBundle.putString("listTitle",listTitle);
             listBundle.putString("action","update");
-            showList(listId,listTitle);
+            showList(listId,listTitle,colorValue);
         }
     }
     private void getControls(){
@@ -73,6 +106,11 @@ public class CreateListActivity extends AppCompatActivity {
         edtTenList = (EditText) findViewById(R.id.edtTenList);
         tvNotification = (TextView) findViewById(R.id.tvNotification);
         lvToDoItems = (ListView) findViewById(R.id.lvToDoItems);
+
+        //Phuc vu cho color
+        spColorChooser = (Spinner) findViewById(R.id.spColorChooser);
+        llItemDetail = (LinearLayout) findViewById(R.id.llItemDetail);
+        llItem = (LinearLayout) findViewById(R.id.llItem);
     }
     private void addEvents(){
         btnAddItems.setOnClickListener(new processMyFunct());
@@ -111,6 +149,21 @@ public class CreateListActivity extends AppCompatActivity {
             }
         });
 
+        //su kien tren spinner
+        spColorChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Color color = colorArrayList.get(position);
+                llItem.setBackgroundColor(color.getColorValue());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
     private void setDefault(){
         arrayListTodo = new ArrayList<Todo>();
@@ -120,13 +173,27 @@ public class CreateListActivity extends AppCompatActivity {
                 R.layout.todo_item_row,arrayListTodo);
         //lvToDoItems.setAdapter(arrayAdapterTodo);
         lvToDoItems.setAdapter(myTDAdapter);
+
+        //color
+        colorArrayList = new ArrayList<Color>();
+        colorAdapter = new ColorAdapter(this,R.layout.color_row,colorArrayList);
+        myIntColors = getResources().getIntArray(R.array.intColors);
+        myStringColors = getResources().getStringArray(R.array.stringColors);
+        for (int i = 0 ; i<myStringColors.length ; i++ ){
+            colorArrayList.add(new Color(myStringColors[i],myIntColors[i]));
+        }
+        spColorChooser.setAdapter(colorAdapter);
+        spColorChooser.setSelection(0);
     }
     private void requestDisplayItem(Todo item) {
         Intent intent = new Intent(CreateListActivity.this,CreateItemsActivity.class);
+        int listColorIndex = listBundle.getInt("listColorIndex");
         //gui object qua
         listBundle.putSerializable("item",item);
         listBundle.putString("action","update");
+        listBundle.putInt("listcolorIndex",listColorIndex);
         intent.putExtra("toItem",listBundle);
+
         startActivity(intent);
     }
     private void gobackMain() {
@@ -165,19 +232,25 @@ public class CreateListActivity extends AppCompatActivity {
     private void saveListAction(){
         //viet lai theo 2 action la update va new
         //se chinh lai sau
-        String listTitle;
+        String listTitle,listColor;
         int listId;
         TodoList tdl;
         if(edtTenList.getText().toString().trim().length() ==0){
             String title = MyUtility.getCurrentDate() + "-" + MyUtility.getCurrentTime();
             edtTenList.setText(title);
         }
-        listTitle = edtTenList.getText().toString();
+        //Lay color cua spinner
+        Color color = new Color();
+        int index = spColorChooser.getSelectedItemPosition();
+        System.out.println("index spinner la "+index);
+        listColor = colorArrayList.get(index).getColorKey().toString();
 
+        listTitle = edtTenList.getText().toString();
         tdl = new TodoList();
         listId = listBundle.getInt("listId");
         tdl.setID(listId);
         tdl.setTITLE(listTitle);
+        tdl.setCOLOR(listColor);
         String action = listBundle.getString("action")+"";
         /*
         System.out.println("listId trong ham saveListAction() cua CreateListActivity la " + listId);
@@ -225,11 +298,12 @@ public class CreateListActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
-    private void showList(int listId,String listTitle){
+    private void showList(int listId,String listTitle,int colorValue){
         ArrayList<Todo> arr = new ArrayList<Todo>();
         //set gia tri cho edtTenList
         edtTenList.setText(listTitle);
         arrayListTodo.clear();
+
         //gan gia tri moi cho arrayListTodo
         arr = toDoHelper.getList(listId);
         System.out.println("Todo item ="+arrayListTodo.size());

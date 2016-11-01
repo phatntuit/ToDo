@@ -1,8 +1,11 @@
 package uit.phatnguyen.todo.helper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+
+import uit.phatnguyen.todo.model.Color;
 
 /**
  * Created by PhatNguyen on 2016-10-26.
@@ -84,5 +87,15 @@ public final class MyUtility {
                 now.get(Calendar.SECOND));
         System.out.println("Mili giây hiện tại: " +
                 now.get(Calendar.MILLISECOND));
+    }
+    public static int getIndex(ArrayList<Color> arr, String key){
+        int index = 0;
+        for(int i =0 ; i< arr.size() ; i ++){
+            if (arr.get(i).getColorKey().equals(key)){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }
