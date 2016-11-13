@@ -41,7 +41,4 @@ public class MySQLiteDB {
         }
         return activity.openOrCreateDatabase(databaseName, Context.MODE_PRIVATE, null);
     }
-    public  static  void QueryData(String sql){
-        SQLiteDatabase database;
-    }
 }
