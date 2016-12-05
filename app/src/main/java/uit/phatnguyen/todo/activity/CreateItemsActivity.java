@@ -1,7 +1,10 @@
 package uit.phatnguyen.todo.activity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +20,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import uit.phatnguyen.todo.R;
 import uit.phatnguyen.todo.adapter.ColorAdapter;
 import uit.phatnguyen.todo.db.ToDoHelper;
+import uit.phatnguyen.todo.helper.AlarmReceiver;
 import uit.phatnguyen.todo.helper.MyUtility;
 import uit.phatnguyen.todo.model.Color;
 import uit.phatnguyen.todo.model.Todo;
@@ -42,6 +47,9 @@ public class CreateItemsActivity extends AppCompatActivity {
     int[] myIntColors;
     String[] myStringColors;
     LinearLayout llItemDetail;
+
+    AlarmReceiver alarm = new AlarmReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -311,6 +319,9 @@ public class CreateItemsActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Thêm thành công TodoItem CONTENT :"+todo.getCONTENT().toString(),
                     Toast.LENGTH_LONG).show();
+            if(todo.getIsNOTIFICATION()==1){
+                alarm.setAlarm(this,todo.getDATE(),todo.getHOUR());
+            }
         }
         goBackList(listId);
     }
@@ -328,6 +339,10 @@ public class CreateItemsActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Update thành công TodoItem ID = "+todo.getID(),
                     Toast.LENGTH_LONG).show();
+            alarm.cancel(this);
+            if(todo.getIsNOTIFICATION()==1 && todo.getSTATUS() != 1){
+                alarm.setAlarm(this,todo.getDATE(),todo.getHOUR());
+            }
         }
         goBackList(listId);
     }

@@ -14,7 +14,7 @@ import java.io.InputStream;
  */
 
 public class MySQLiteDB {
-    public static SQLiteDatabase initDatabase(Activity activity, String databaseName){
+    public static SQLiteDatabase initDatabase(Context activity, String databaseName){
         try {
             String outFileName = activity.getApplicationInfo().dataDir + "/databases/" + databaseName;
             File f = new File(outFileName);

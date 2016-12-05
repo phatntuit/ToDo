@@ -24,20 +24,20 @@ public class Todo implements Serializable{
     public final static String COL_ID = "ID";
     public final static String COL_TODOFK = "TODO_FK";
     public final static String COL_CONTENT = "CONTENT";
-    public final static String COL_DATE = "DATE";
-    public final static String COL_HOUR = "TIME";
-    public final static String COL_LOCATION = "LOCATION";
-    public final static String COL_STATUS = "STATUS";
-    public final static String COL_COLOR = "COLOR";
-    public final static String COL_NGAYTAO = "NGAYTAO";
-    public final static String COL_NGAYSUA = "NGAYSUA";
-    public final static String COL_NHACNHO = "isNOTIFICATION";
+        public final static String COL_DATE = "DATE";
+        public final static String COL_HOUR = "TIME";
+        public final static String COL_LOCATION = "LOCATION";
+        public final static String COL_STATUS = "STATUS";
+        public final static String COL_COLOR = "COLOR";
+        public final static String COL_NGAYTAO = "NGAYTAO";
+        public final static String COL_NGAYSUA = "NGAYSUA";
+        public final static String COL_NHACNHO = "isNOTIFICATION";
 
-    public final static String TABLE_NAME = "TODOITEMS";
-    public final static String WHERE_ID= " ID = ?";
-    public final static String WHERE_TODOFK = " TODO_FK = ?";
+        public final static String TABLE_NAME = "TODOITEMS";
+        public final static String WHERE_ID= " ID = ?";
+        public final static String WHERE_TODOFK = " TODO_FK = ?";
 
-    public Todo(){
+        public Todo(){
         this.COLOR = "white";
         this.NGAYSUA = MyUtility.getCurrentDateTime();
         this.NGAYTAO = MyUtility.getCurrentDateTime();
