@@ -132,6 +132,9 @@ public class CreateItemsActivity extends AppCompatActivity {
                 Color color = colorArrayList.get(position);
                 llItemDetail.setBackgroundColor(color.getColorValue());
 
+
+
+
             }
 
             @Override
@@ -158,6 +161,8 @@ public class CreateItemsActivity extends AppCompatActivity {
                 +" listColorIndex :"+listColorIndex);
         System.out.println("Da ra khoi gobackList(); voi action duoc gan la :"
                 +toList.getString("action"));
+
+        this.finish();
     }
     /**
      * Hàm hiển thị DatePickerDialog
@@ -173,7 +178,7 @@ public class CreateItemsActivity extends AppCompatActivity {
         int ngay,thang,nam;
         String date[] = btnNgay.getText().toString().split("-");
         ngay = Integer.parseInt(date[0]);
-        thang = Integer.parseInt(date[1]);
+        thang = Integer.parseInt(date[1]) - 1;
         nam = Integer.parseInt(date[2]);
 
         System.out.println("Ngay :" + ngay + " thang :"+thang + " nam :"+nam);

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -47,7 +48,7 @@ public class CreateListActivity extends AppCompatActivity {
     ArrayList<Color> colorArrayList ;
     ColorAdapter colorAdapter;
 
-    //array cua colo trong file xml
+    //array cua color trong file xml
     int[] myIntColors;
     String[] myStringColors;
     LinearLayout llItemDetail;
@@ -156,6 +157,7 @@ public class CreateListActivity extends AppCompatActivity {
                 Color color = colorArrayList.get(position);
                 llItem.setBackgroundColor(color.getColorValue());
 
+                tvNotification.setTextColor(color.getColorValue());
             }
 
             @Override
@@ -197,7 +199,7 @@ public class CreateListActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void gobackMain() {
-        finish();
+        this.finish();
         Intent intent = new Intent(CreateListActivity.this,MainActivity.class);
         startActivity(intent);
     }
@@ -370,6 +372,17 @@ public class CreateListActivity extends AppCompatActivity {
         }
         return arr;
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     public class processMyFunct implements View.OnClickListener{
         @Override
         public void onClick(View v) {
