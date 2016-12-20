@@ -31,9 +31,9 @@ public class BootReceiver extends BroadcastReceiver {
                         String HOUR = cursor.getString(cursor.getColumnIndex(Todo.COL_HOUR));
                         int STATUS = cursor.getInt(cursor.getColumnIndex(Todo.COL_STATUS));
                         int isNOTIFICATION = cursor.getInt(cursor.getColumnIndex(Todo.COL_NHACNHO));
-
+                        int id = cursor.getInt(cursor.getColumnIndex(Todo.COL_ID));
                         if(STATUS == 0 && isNOTIFICATION == 1){
-                            alarm.setAlarm(context,DATE,HOUR);
+                            alarm.setAlarm(context,DATE,HOUR,id);
                         }
                     }
                 }

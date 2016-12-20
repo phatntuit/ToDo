@@ -12,7 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import uit.phatnguyen.todo.R;
-import uit.phatnguyen.todo.activity.CreateItemsActivity;
+import uit.phatnguyen.todo.activity.MainActivity;
 
 public class SchedulingService extends IntentService {
 
@@ -25,24 +25,26 @@ public class SchedulingService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        sendNotification("");
+        String title = intent.getExtras().getString("title");
+        String content = intent.getExtras().getString("content");
+        sendNotification(content,title);
         runRingtone();
         AlarmReceiver.completeWakefulIntent(intent);
     }
-    private void sendNotification(String msg) {
+    private void sendNotification(String content,String title) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, CreateItemsActivity.class), 0);
+                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.todo)
-                        .setContentTitle("")
+                        .setContentTitle(title)
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg);
+                                .bigText(content))
+                        .setContentText(content);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

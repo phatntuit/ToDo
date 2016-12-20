@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -319,8 +320,10 @@ public class CreateItemsActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Thêm thành công TodoItem CONTENT :"+todo.getCONTENT().toString(),
                     Toast.LENGTH_LONG).show();
-            if(todo.getIsNOTIFICATION()==1){
-                alarm.setAlarm(this,todo.getDATE(),todo.getHOUR());
+            if(todo.getIsNOTIFICATION()==1 && todo.getSTATUS() != 1){
+                int id =  toDoHelper.getCurrentId(Todo.TABLE_NAME,Todo.COL_ID);
+                Log.d("ID", "insertTodo: "+id);
+                alarm.setAlarm(this,todo.getDATE(),todo.getHOUR(),id);
             }
         }
         goBackList(listId);
@@ -339,9 +342,9 @@ public class CreateItemsActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Update thành công TodoItem ID = "+todo.getID(),
                     Toast.LENGTH_LONG).show();
-            alarm.cancel(this);
+            alarm.cancel(this,todo.getID());
             if(todo.getIsNOTIFICATION()==1 && todo.getSTATUS() != 1){
-                alarm.setAlarm(this,todo.getDATE(),todo.getHOUR());
+                alarm.setAlarm(this,todo.getDATE(),todo.getHOUR(),todo.getID());
             }
         }
         goBackList(listId);

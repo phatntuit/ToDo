@@ -243,4 +243,25 @@ public class ToDoHelper {
         }
         return  num;
     }
+    public int getCurrentId(String tableName, String colInteger){
+
+        int id = 0;
+        String query = "SELECT " + colInteger + " FROM " + tableName + " ORDER BY "+ colInteger
+                +" DESC LIMIT 1";
+        System.out.println(query);
+        Cursor cursor = getQuery(query,null);
+        try {
+            cursor.moveToFirst();
+            if(cursor.getCount()==0)
+                id = 1;
+            else
+                id = cursor.getInt(0) ;
+        }catch (SQLiteException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            cursor.close();
+        }
+
+        return id;
+    }
 }

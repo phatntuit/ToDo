@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
@@ -14,22 +16,50 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import uit.phatnguyen.todo.db.ToDoHelper;
+import uit.phatnguyen.todo.model.Todo;
+
 public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     private AlarmManager alarmMgr;
-    // The pending intent that is triggered when the alarm fires.
     private PendingIntent pendingIntent;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent service = new Intent(context, SchedulingService.class);
+        int alarmId = intent.getExtras().getInt("alarmId");
+        Log.d("ID", "onReceive: "+alarmId);
+        String title="";
+        String content="";
+        /*ToDoHelper toDoHelper = new ToDoHelper(context);
+        Cursor cursor = toDoHelper.getQuery("Select * from TODOITEMS,TODOLIST where TODOLIST.ID = TODOITEMS.TODO_FK and ID = " + alarmId,null);
+        try{
+            if(cursor.getCount() > 0){
+                for (int i =0 ; i< cursor.getCount() ; i++){
+                    //chuyen con tro ve vi tri thu i
+                    cursor.moveToPosition(i);
+                    //cursor.getColumnIndex(TodoList.COL_TITLE) : LAY INDEX CUA COLUMN TITLE
+                    title = cursor.getString(cursor.getColumnIndex("TITLE"));
+                    content = cursor.getString(cursor.getColumnIndex("CONTENT"));
+
+                }
+            }
+        }catch (SQLiteException ex){
+            System.out.println(ex.getMessage().toString());
+        }
+        finally {
+            cursor.close();
+        }*/
+        service.putExtra("title", title);
+        service.putExtra("content", content);
         startWakefulService(context, service);
     }
-    public  void setAlarm(Context context,String ngayhen,String giohen){
+    public  void setAlarm(Context context,String ngayhen,String giohen,int id){
 
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        intent.putExtra("alarmId",id);
+        pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
         int interval = 1000 * 60 * 10;
 
         int ngay,thang,nam;
@@ -44,6 +74,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         Log.d("Ngay", "setAlarm: "+ngay+"--"+thang+"--"+nam);
         Log.d("Gio", "setAlarm: "+gio+":"+phut);
+        Log.d("ID", "setAlarm: "+id);
         /* Set the alarm to start*/
 
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
@@ -56,15 +87,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         /* Repeating on every 10 minutes interval */
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                  interval,pendingIntent);
-        boolean alarmUp = (PendingIntent.getBroadcast(context, 0,
-                new Intent(context,AlarmReceiver.class),
-                PendingIntent.FLAG_NO_CREATE) != null);
 
-        if (alarmUp)
-        {
-            Log.d("myTag", "Alarm is already active");
-        }
-        Log.d("Alarm", "setAlarm: ");
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();
 
@@ -72,14 +95,15 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
     }
-    public void cancel(Context context) {
+    public void cancel(Context context,int id) {
         // If the alarm has been set, cancel it.
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
         if (alarmMgr!= null) {
             alarmMgr.cancel(pendingIntent);
             Log.d("Cancel alarm", "cancel: ");
+            Log.d("ID", "cancelAlarm: "+id);
         }
 
         // Disable {@code SampleBootReceiver} so that it doesn't automatically restart the
