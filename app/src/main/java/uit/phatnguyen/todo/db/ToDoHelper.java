@@ -2,6 +2,7 @@ package uit.phatnguyen.todo.db;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -18,9 +19,9 @@ import uit.phatnguyen.todo.model.TodoList;
 public class ToDoHelper {
     private final static  String DATABASE_NAME = "TODO.sqlite";
     private  static SQLiteDatabase database;
-    private Activity context;
+    private Context context;
 
-    public ToDoHelper(Activity context) {
+    public ToDoHelper(Context context) {
         this.context = context;
         database = MySQLiteDB.initDatabase(context,DATABASE_NAME);
     }
@@ -241,5 +242,26 @@ public class ToDoHelper {
             cursor.close();
         }
         return  num;
+    }
+    public int getCurrentId(String tableName, String colInteger){
+
+        int id = 0;
+        String query = "SELECT " + colInteger + " FROM " + tableName + " ORDER BY "+ colInteger
+                +" DESC LIMIT 1";
+        System.out.println(query);
+        Cursor cursor = getQuery(query,null);
+        try {
+            cursor.moveToFirst();
+            if(cursor.getCount()==0)
+                id = 1;
+            else
+                id = cursor.getInt(0) ;
+        }catch (SQLiteException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            cursor.close();
+        }
+
+        return id;
     }
 }
