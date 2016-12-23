@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -25,8 +26,11 @@ public class SchedulingService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String title = intent.getExtras().getString("title");
-        String content = intent.getExtras().getString("content");
+        Bundle receivedBundle = new Bundle();
+        receivedBundle = intent.getBundleExtra("service");
+
+        String title = receivedBundle.getString("title");
+        String content = receivedBundle.getString("content");
         sendNotification(content,title);
         runRingtone();
         AlarmReceiver.completeWakefulIntent(intent);

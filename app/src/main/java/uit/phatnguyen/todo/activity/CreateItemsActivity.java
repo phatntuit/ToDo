@@ -1,10 +1,7 @@
 package uit.phatnguyen.todo.activity;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +18,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import uit.phatnguyen.todo.R;
 import uit.phatnguyen.todo.adapter.ColorAdapter;
@@ -181,13 +177,14 @@ public class CreateItemsActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month,
                                   int dayOfMonth) {
-                btnNgay.setText(dayOfMonth + "-" + month + "-" + year);
+                int newmonth = month + 1;
+                btnNgay.setText(dayOfMonth + "-" + newmonth + "-" + year);
             }
         };
         int ngay,thang,nam;
         String date[] = btnNgay.getText().toString().split("-");
         ngay = Integer.parseInt(date[0]);
-        thang = Integer.parseInt(date[1]) - 1;
+        thang = Integer.parseInt(date[1])-1;
         nam = Integer.parseInt(date[2]);
 
         System.out.println("Ngay :" + ngay + " thang :"+thang + " nam :"+nam);

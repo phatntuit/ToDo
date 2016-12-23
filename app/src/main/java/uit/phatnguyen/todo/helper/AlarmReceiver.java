@@ -8,16 +8,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import uit.phatnguyen.todo.db.ToDoHelper;
-import uit.phatnguyen.todo.model.Todo;
 
 public class AlarmReceiver extends WakefulBroadcastReceiver {
 
@@ -26,13 +25,24 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent service = new Intent(context, SchedulingService.class);
-        int alarmId = intent.getExtras().getInt("alarmId");
+        Log.d("OnReceive","going there");
+
+        Bundle bundle = new Bundle();
+
+        //bundle = intent.getBundleExtra("alarm");
+
+        String test = intent.getStringExtra("test");
+        int alarmId = bundle.getInt("alarmId",0);
         Log.d("ID", "onReceive: "+alarmId);
+
+        Intent service = new Intent(context, SchedulingService.class);
+
+
+
         String title="";
         String content="";
-        /*ToDoHelper toDoHelper = new ToDoHelper(context);
-        Cursor cursor = toDoHelper.getQuery("Select * from TODOITEMS,TODOLIST where TODOLIST.ID = TODOITEMS.TODO_FK and ID = " + alarmId,null);
+        ToDoHelper toDoHelper = new ToDoHelper(context);
+        Cursor cursor = toDoHelper.getQuery("Select * from TODOITEMS,TODOLIST where TODOLIST.ID = TODOITEMS.TODO_FK and TODOITEMS.ID = " + alarmId,null);
         try{
             if(cursor.getCount() > 0){
                 for (int i =0 ; i< cursor.getCount() ; i++){
@@ -49,16 +59,27 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
         finally {
             cursor.close();
-        }*/
-        service.putExtra("title", title);
-        service.putExtra("content", content);
+        }
+        Bundle serviceBundle = new Bundle();
+        serviceBundle.putString("title", title);
+        serviceBundle.putString("content", content);
+        service.putExtra("service",serviceBundle);
         startWakefulService(context, service);
     }
     public  void setAlarm(Context context,String ngayhen,String giohen,int id){
-
+        Log.d("setAlarm","going there");
+        Bundle bundle = new Bundle();
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra("alarmId",id);
+
+        bundle.putInt("alarmId",id);
+        Log.d("AddBundle alaramID",id+"");
+        //intent.putExtra("alarm",bundle);
+
+
+        intent.putExtra("test","tau la du lieu gui qua tu set alarm");
+
+
         pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
         int interval = 1000 * 60 * 10;
 
@@ -84,6 +105,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         calendar.set(Calendar.YEAR,nam);
         calendar.set(Calendar.MONTH,thang-1);
         calendar.set(Calendar.DATE,ngay);
+
+        Log.d("Calendarinfo",calendar.toString()+"");
         /* Repeating on every 10 minutes interval */
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                  interval,pendingIntent);
