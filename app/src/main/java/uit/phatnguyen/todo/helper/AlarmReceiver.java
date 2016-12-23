@@ -25,15 +25,18 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("OnReceive","going there");
 
-        Bundle bundle = new Bundle();
+        Log.d("OnReceive","going there"+intent.toString());
 
-        //bundle = intent.getBundleExtra("alarm");
+        Bundle bundle1 = null;
 
-        String test = intent.getStringExtra("test");
-        int alarmId = bundle.getInt("alarmId",0);
+        bundle1 = intent.getBundleExtra("alarm");
+
+        String test = intent.getAction();
+        Log.d("test", "onReceive: "+test);
+        int alarmId = bundle1.getInt("alarmId",0);
         Log.d("ID", "onReceive: "+alarmId);
+
 
         Intent service = new Intent(context, SchedulingService.class);
 
@@ -74,9 +77,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         bundle.putInt("alarmId",id);
         Log.d("AddBundle alaramID",id+"");
-        //intent.putExtra("alarm",bundle);
 
 
+        intent.putExtra("alarm",bundle);
         intent.putExtra("test","tau la du lieu gui qua tu set alarm");
 
 

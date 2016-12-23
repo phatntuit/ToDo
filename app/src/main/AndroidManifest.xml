@@ -21,7 +21,11 @@
         </activity>
         <activity android:name=".activity.CreateListActivity" />
         <activity android:name=".activity.CreateItemsActivity" />
-        <receiver android:name=".helper.AlarmReceiver"/>
+        <receiver android:name=".helper.AlarmReceiver">
+            <intent-filter>
+                <action android:name="test"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".helper.BootReceiver"
             android:enabled="false">
             <intent-filter>
