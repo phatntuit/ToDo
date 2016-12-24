@@ -22,6 +22,7 @@ import uit.phatnguyen.todo.R;
 import uit.phatnguyen.todo.adapter.ColorAdapter;
 import uit.phatnguyen.todo.adapter.TDArrayAdapter;
 import uit.phatnguyen.todo.db.ToDoHelper;
+import uit.phatnguyen.todo.helper.AlarmReceiver;
 import uit.phatnguyen.todo.helper.MyUtility;
 import uit.phatnguyen.todo.model.Color;
 import uit.phatnguyen.todo.model.Todo;
@@ -53,6 +54,10 @@ public class CreateListActivity extends AppCompatActivity {
     String[] myStringColors;
     LinearLayout llItemDetail;
     LinearLayout llItem;
+
+
+    //Alarm Receiver
+    AlarmReceiver alarm = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

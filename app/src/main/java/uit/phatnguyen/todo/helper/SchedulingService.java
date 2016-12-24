@@ -32,7 +32,7 @@ public class SchedulingService extends IntentService {
         String title = receivedBundle.getString("title");
         String content = receivedBundle.getString("content");
         sendNotification(content,title);
-        runRingtone();
+        //runRingtone();
         AlarmReceiver.completeWakefulIntent(intent);
     }
     private void sendNotification(String content,String title) {
@@ -49,6 +49,8 @@ public class SchedulingService extends IntentService {
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(content))
                         .setContentText(content)
+                        .setSound(Uri.parse("android.resource://"
+                                + getBaseContext().getPackageName() + "/" + R.raw.chipkiss))
                         .setAutoCancel(true);
 
         mBuilder.setContentIntent(contentIntent);
@@ -72,7 +74,9 @@ public class SchedulingService extends IntentService {
             }
         }
         if (r != null)
+        {
             r.play();
+        }
 
     }
 }

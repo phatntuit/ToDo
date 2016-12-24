@@ -136,10 +136,6 @@ public class CreateItemsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Color color = colorArrayList.get(position);
                 llItemDetail.setBackgroundColor(color.getColorValue());
-
-
-
-
             }
 
             @Override
@@ -344,12 +340,15 @@ public class CreateItemsActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Update thành công TodoItem ID = "+todo.getID(),
                     Toast.LENGTH_LONG).show();
-            alarm.cancel(this,todo.getID());
+            alarm.cancel(CreateItemsActivity.this,todo.getID());
             if(todo.getIsNOTIFICATION()==1 && todo.getSTATUS() != 1){
                 alarm.setAlarm(this,todo.getDATE(),todo.getHOUR(),todo.getID());
             }
         }
         goBackList(listId);
+    }
+    private void showDeleteConfirm(){
+
     }
     public class processMyFunct implements View.OnClickListener{
         @Override
